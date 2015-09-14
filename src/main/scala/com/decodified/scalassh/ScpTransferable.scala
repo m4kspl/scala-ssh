@@ -28,8 +28,8 @@ trait ScpTransferable {
   def upload(localPath: String, remotePath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
     fileTransfer(_.upload(localPath, remotePath))(listener)
 
-  def uploadBytes(bytes: Array[Byte], name: String, remotePath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
-    fileTransfer(_.upload(new ByteBufferSourceFile(bytes, name), remotePath))(listener)
+  def uploadBytes(bytes: Array[Byte], remotePath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
+    fileTransfer(_.upload(new ByteBufferSourceFile(bytes), remotePath))(listener)
 
   def download(remotePath: String, localPath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
     fileTransfer(_.download(remotePath, localPath))(listener)
