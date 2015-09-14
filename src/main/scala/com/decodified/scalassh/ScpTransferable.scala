@@ -2,8 +2,7 @@ package com.decodified.scalassh
 
 import net.schmizz.sshj.sftp.SFTPClient
 import net.schmizz.sshj.xfer.scp.SCPFileTransfer
-import net.schmizz.sshj.xfer.TransferListener
-import net.schmizz.sshj.xfer.LoggingTransferListener
+import net.schmizz.sshj.xfer.{ LoggingTransferListener, TransferListener }
 
 trait ScpTransferable {
   self: SshClient ⇒
@@ -28,6 +27,9 @@ trait ScpTransferable {
 
   def upload(localPath: String, remotePath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
     fileTransfer(_.upload(localPath, remotePath))(listener)
+
+  def uploadBytes(bytes: Array[Byte], name: String, remotePath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
+    fileTransfer(_.upload(new ByteBufferSourceFile(bytes, name), remotePath))(listener)
 
   def download(remotePath: String, localPath: String)(implicit listener: TransferListener = new LoggingTransferListener()): Validated[Unit] =
     fileTransfer(_.download(remotePath, localPath))(listener)

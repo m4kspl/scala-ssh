@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 
 name := "scala-ssh"
 
-version := "0.7.1"
+version := "0.7.2"
 
 organization := "com.decodified"
 
